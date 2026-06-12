@@ -242,12 +242,16 @@ export default function AdminClubs() {
                     <span className={`badge ${club.isApproved ? 'badge-green' : 'badge-yellow'}`}>
                       {club.isApproved ? '✓ Aprobado' : '⏳ Pendiente'}
                     </span>
+                     <button className="btn btn-secondary btn-sm" onClick={() => openEdit(club)} aria-label={`Editar ${club.name}`}>editar</button>
+                      <button className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(club.id)}>Borrar</button>
+                    
                   </td>
                   <td>
                     <div style={{ display: 'flex', gap: 6 }}>
                       <button className="btn btn-secondary btn-sm" onClick={() => openEdit(club)} aria-label={`Editar ${club.name}`}>editar</button>
                       <button className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(club.id)}>Borrar</button>
-                    </div>
+                    
+                     </div>
                   </td>
                 </tr>
               ))}

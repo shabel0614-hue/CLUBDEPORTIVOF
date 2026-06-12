@@ -95,6 +95,13 @@ export default function ClubCard({ club }: { club: ClubResponseDto }) {
         >
           Ver detalles →
         </Link>
+        <button 
+            className="btn btn-danger btn-sm" 
+            onClick={() => onDelete(club.id)}
+            aria-label="Eliminar club"
+          >
+            🗑️
+          </button>
       </div>
     </article>
   );
