@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 // COMPONENTE LAYOUT PUBLICO
 export default function PublicLayout() {
@@ -9,6 +10,7 @@ export default function PublicLayout() {
       <NavBar />
       {/* CONTENIDO A ACTUALIZAR */}
       <Outlet />
+      <Footer />
     </div>
   );
 }
