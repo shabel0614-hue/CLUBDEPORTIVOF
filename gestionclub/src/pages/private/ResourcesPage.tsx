@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Añadimos useNavigate
 import { useAuth } from "../../context/AuthContext";
 import { resourceService } from "../../services/resourceService";
 import type { ResourceResponseDto } from "../../types/resource";
-import ConfirmDialog from "../../components/ConfirmDialog"; // Asegúrate de importar esto
+import ConfirmDialog from "../../components/ConfirmDialog";
 
 export default function ResourcesPage() {
   const { user } = useAuth();
+  const navigate = useNavigate(); // Hook para navegación
   const [items, setItems] = useState<ResourceResponseDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
@@ -34,14 +35,14 @@ export default function ResourcesPage() {
     }
   };
 
-  const canCreate = useMemo(() => user?.role === "Admin" || user?.role === "Fundador", [user?.role]);
+  const canEdit = useMemo(() => user?.role === "Admin" || user?.role === "Fundador", [user?.role]);
 
   return (
     <div className="page-shell">
       <ConfirmDialog
         open={!!deleteTarget}
         title="Eliminar recurso"
-        message="¿Estás seguro de que deseas eliminar este recurso? Esta acción no se puede deshacer."
+        message="¿Estás seguro de que deseas eliminar este recurso?"
         onConfirm={handleDelete}
         onCancel={() => setDeleteTarget(null)}
         confirmLabel="Eliminar"
@@ -49,7 +50,7 @@ export default function ResourcesPage() {
 
       <div className="section-header">
         <h1>Recursos</h1>
-        {canCreate && (
+        {canEdit && (
           <Link to="/resources/new" className="btn btn-primary btn-sm">+ Nuevo</Link>
         )}
       </div>
@@ -63,15 +64,24 @@ export default function ResourcesPage() {
               <h3>{r.name}</h3>
               <p>{r.type} — {r.campus}</p>
               
-              {/* Botón de borrar solo visible si es Admin/Fundador */}
-              {canCreate && (
-                <button 
-                  className="btn btn-danger btn-sm" 
-                  onClick={() => setDeleteTarget(r.id)}
-                  style={{ marginTop: '10px' }}
-                >
-                  Borrar
-                </button>
+              {canEdit && (
+                <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
+                  {/* Botón Editar: Redirige al formulario de edición */}
+                  <button 
+                    className="btn btn-secondary btn-sm" 
+                    onClick={() => navigate(`/resources/edit/${r.id}`)}
+                  >
+                    Editar
+                  </button>
+                  
+                  {/* Botón Borrar */}
+                  <button 
+                    className="btn btn-danger btn-sm" 
+                    onClick={() => setDeleteTarget(r.id)}
+                  >
+                    Borrar
+                  </button>
+                </div>
               )}
             </div>
           ))}
