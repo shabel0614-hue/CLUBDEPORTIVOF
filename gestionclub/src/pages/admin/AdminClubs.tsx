@@ -245,8 +245,8 @@ export default function AdminClubs() {
                   </td>
                   <td>
                     <div style={{ display: 'flex', gap: 6 }}>
-                      <button className="btn btn-secondary btn-sm" onClick={() => openEdit(club)} aria-label={`Editar ${club.name}`}>✏️</button>
-                      <button className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(club.id)} aria-label={`Eliminar ${club.name}`}>🗑️</button>
+                      <button className="btn btn-secondary btn-sm" onClick={() => openEdit(club)} aria-label={`Editar ${club.name}`}>editar</button>
+                      <button className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(club.id)}>Borrar</button>
                     </div>
                   </td>
                 </tr>
